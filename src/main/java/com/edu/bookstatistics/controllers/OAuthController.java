@@ -36,7 +36,7 @@ public class OAuthController {
     @GetMapping("/loginSuccess")
     @Operation(
             summary = "Получить информацию о вошедшем пользователе или token",
-            description = "Возвращает информацию об аутентифицированном пользователе и токене после успешного входа через OAuth2.",
+            description = "Возвращает информацию об аутентифицированном пользователе после успешного входа через OAuth2.",
             security = @SecurityRequirement(name = "bearerAuth"),
             responses = {
                     @ApiResponse(responseCode = "200", description = "Информация о пользователе успешно получена")
