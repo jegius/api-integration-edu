@@ -24,6 +24,7 @@ public class OpenApiConfig {
                                         .type(SecurityScheme.Type.HTTP)
                                         .scheme("bearer")
                                         .bearerFormat("JWT"))
+
                         .addSchemas("MultipartFileArray", new io.swagger.v3.oas.models.media.Schema()
                                 .type("array")
                                 .items(new io.swagger.v3.oas.models.media.Schema().type("string").format("binary"))))
