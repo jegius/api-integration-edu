@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:latest
+    container_name: postgres_container
+    environment:
+      POSTGRES_DB: books_db            # Имя базы данных
+      POSTGRES_USER: book_user      # Ваш логин
+      POSTGRES_PASSWORD: password   # Ваш пароль
+    ports:
+      - "5432:5432"                      # Пробрасываем порт
+    volumes:
+      - postgres_data:/var/lib/postgresql/data # Для хранения данных между перезагрузками контейнера
+
+volumes:
+  postgres_data:
