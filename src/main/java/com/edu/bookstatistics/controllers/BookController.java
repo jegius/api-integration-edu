@@ -7,11 +7,12 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.*;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -30,17 +31,18 @@ public class BookController {
     @PostMapping
     @Operation(
             summary = "Добавить новую книгу",
-            description = "Добавляет новую книгу в коллекцию",
+            security = @SecurityRequirement(name = "bearerAuth"),
             requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
                     description = "Данные книги",
                     required = true,
                     content = @Content(
                             schema = @Schema(implementation = BookDTO.class),
-                            examples = @ExampleObject(value = "{\"title\": \"Новое название\", \"author\": \"Автор\", \"totalPages\": 44}")
+                            examples = @ExampleObject(value = "{\"title\": \"Новое название\", \"author\": \"Автор\", \"totalPages\": 44, \"coverImage\": \"http://example.com/cover.jpg\"}")
                     )
             ),
             responses = {
-                    @ApiResponse(responseCode = "200", description = "Успешное добавление книги", content = @Content(mediaType = "application/json"))
+                    @ApiResponse(responseCode = "200", description = "Успешное добавление книги", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Book.class))),
+                    @ApiResponse(responseCode = "403", description = "Пользователь не авторизован")
             }
     )
     public ResponseEntity<Book> addBook(@RequestBody BookDTO bookDTO) {
@@ -57,17 +59,19 @@ public class BookController {
     @PutMapping
     @Operation(
             summary = "Обновить книгу",
-            description = "Обновляет информацию о книге",
-            requestBody =  @io.swagger.v3.oas.annotations.parameters.RequestBody(
+            security = @SecurityRequirement(name = "bearerAuth"),
+            requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
                     description = "Данные обновленной книги",
                     required = true,
                     content = @Content(
                             schema = @Schema(implementation = BookDTO.class),
-                            examples = @ExampleObject(value = "{\"id\": 1, \"title\": \"Обновленное название\", \"author\": \"Автор\"}")
+                            examples = @ExampleObject(value = "{\"id\": 1, \"title\": \"Обновленное название\", \"author\": \"Автор\", \"totalPages\": 50, \"coverImage\": \"http://example.com/cover_updated.jpg\"}")
                     )
             ),
             responses = {
-                    @ApiResponse(responseCode = "200", description = "Успешное обновление книги", content = @Content(mediaType = "application/json"))
+                    @ApiResponse(responseCode = "200", description = "Успешное обновление книги", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Book.class))),
+                    @ApiResponse(responseCode = "404", description = "Книга не найдена"),
+                    @ApiResponse(responseCode = "403", description = "Пользователь не авторизован")
             }
     )
     public ResponseEntity<Book> updateBook(@RequestBody BookDTO bookDTO) {
@@ -80,14 +84,15 @@ public class BookController {
         return ResponseEntity.ok(bookService.updateBook(book));
     }
 
-
     @PreAuthorize("isAuthenticated()")
     @DeleteMapping("/{id}")
     @Operation(
             summary = "Удалить книгу",
-            description = "Удаляет книгу по её ID",
+            security = @SecurityRequirement(name = "bearerAuth"),
             responses = {
-                    @ApiResponse(responseCode = "200", description = "Успешное удаление", content = @Content(mediaType = "application/json"))
+                    @ApiResponse(responseCode = "200", description = "Успешное удаление", content = @Content(mediaType = "application/json")),
+                    @ApiResponse(responseCode = "404", description = "Книга не найдена"),
+                    @ApiResponse(responseCode = "403", description = "Пользователь не авторизован")
             }
     )
     public ResponseEntity<Void> deleteBook(@PathVariable Long id) {
@@ -99,9 +104,10 @@ public class BookController {
     @GetMapping
     @Operation(
             summary = "Получить все книги",
-            description = "Возвращает список всех книг с пагинацией",
+            security = @SecurityRequirement(name = "bearerAuth"),
             responses = {
-                    @ApiResponse(responseCode = "200", description = "Успешный запрос", content = @Content(mediaType = "application/json"))
+                    @ApiResponse(responseCode = "200", description = "Успешный запрос", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Book.class))),
+                    @ApiResponse(responseCode = "403", description = "Пользователь не авторизован")
             }
     )
     public ResponseEntity<List<Book>> getAllBooks(@RequestParam(defaultValue = "0") int page,
@@ -113,9 +119,11 @@ public class BookController {
     @GetMapping("/{id}")
     @Operation(
             summary = "Получить книгу по ID",
-            description = "Возвращает информацию о книге по её ID",
+            security = @SecurityRequirement(name = "bearerAuth"),
             responses = {
-                    @ApiResponse(responseCode = "200", description = "Успешный запрос", content = @Content(mediaType = "application/json"))
+                    @ApiResponse(responseCode = "200", description = "Успешный запрос", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Book.class))),
+                    @ApiResponse(responseCode = "404", description = "Книга не найдена"),
+                    @ApiResponse(responseCode = "403", description = "Пользователь не авторизован")
             }
     )
     public ResponseEntity<Book> getBook(@PathVariable Long id) {
