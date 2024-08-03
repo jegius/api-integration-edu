@@ -10,7 +10,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.JwtClaimsSet;
@@ -30,7 +29,6 @@ import java.util.Map;
 @Tag(name = "OAuth Controller", description = "API для авторизации через OAuth2")
 public class OAuthController {
 
-    private static final Logger logger = LoggerFactory.getLogger(OAuthController.class);
     private final JwtEncoder jwtEncoder;
 
     public OAuthController(JwtEncoder jwtEncoder) {
