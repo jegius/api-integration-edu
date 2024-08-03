@@ -1,7 +1,7 @@
 package com.edu.bookstatistics.controllers;
 
 import com.edu.bookstatistics.entities.User;
-import com.edu.bookstatistics.repositiories.UserRepository;
+import com.edu.bookstatistics.repositories.UserRepository;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;

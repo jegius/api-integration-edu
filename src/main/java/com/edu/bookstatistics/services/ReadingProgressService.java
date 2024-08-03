@@ -1,7 +1,7 @@
 package com.edu.bookstatistics.services;
 
 import com.edu.bookstatistics.entities.ReadingProgress;
-import com.edu.bookstatistics.repositiories.ReadingProgressRepository;
+import com.edu.bookstatistics.repositories.ReadingProgressRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

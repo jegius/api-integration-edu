@@ -1,4 +1,4 @@
-package com.edu.bookstatistics.repositiories;
+package com.edu.bookstatistics.repositories;
 
 import com.edu.bookstatistics.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -1,8 +1,7 @@
 package com.edu.bookstatistics.services;
 
 import com.edu.bookstatistics.entities.User;
-import com.edu.bookstatistics.repositiories.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.edu.bookstatistics.repositories.UserRepository;
 import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserRequest;
 import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserService;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;

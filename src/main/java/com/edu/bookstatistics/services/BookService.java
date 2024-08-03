@@ -1,7 +1,7 @@
 package com.edu.bookstatistics.services;
 
 import com.edu.bookstatistics.entities.Book;
-import com.edu.bookstatistics.repositiories.BookRepository;
+import com.edu.bookstatistics.repositories.BookRepository;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
